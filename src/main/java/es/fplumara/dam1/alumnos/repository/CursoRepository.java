@@ -19,12 +19,14 @@ public interface CursoRepository {
 
 
 
-    boolean activo(boolean estado);
+    // Operaciones específicas requeridas
+    void activar(Integer id);  // pone activo a true
+    void desactivar(Integer id);  // pone activo a false
 
-    void eliminarSiNombreContiene();
+    void eliminarSiNombreContiene(String texto);
 
     List<Curso> listarPorEstado(Boolean estado);
 
-List<Curso> listarOrdenadorPor(String nombre); //pendient
+List<Curso> listarOrdenadorPor(String nombre, String tipoOrden);
 
 }
