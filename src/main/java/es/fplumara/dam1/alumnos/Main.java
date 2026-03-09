@@ -7,7 +7,7 @@ import es.fplumara.dam1.alumnos.repository.AlumnoRepositoryInMemory;
 import es.fplumara.dam1.alumnos.service.AlumnoService;
 import es.fplumara.dam1.alumnos.service.AlumnoServiceImpl;
 
-public class dMain {
+public class Main {
 
     public static void main(String[] args) {
         String url  = "jdbc:postgresql://localhost:5432/dam1";

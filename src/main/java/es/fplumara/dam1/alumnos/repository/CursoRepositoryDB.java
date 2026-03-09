@@ -77,22 +77,100 @@ public class CursoRepositoryDB implements CursoRepository {
     }
 
     @Override
-    public void activar(Integer id) {
+    public void activar(Integer id) { //pone activo a true
+
+        if (id == null){
+
+            throw new IllegalArgumentException("EL id no debe ser nulo");
+        }
+
+        String sql = "UPDATE cursos set estado = true where id = ? ";
+
+        try {
+            Connection c = getConnection();
+            PreparedStatement ps = c.prepareStatement(sql);
+         ps.setInt(1,id);
+
+         int rs = ps.executeUpdate();
+
+
+
+
+         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     @Override
     public void desactivar(Integer id) {
 
+        if (id == null){
+
+            throw new IllegalArgumentException("EL id no debe ser nulo");
+        }
+
+        String sql = "UPDATE cursos set estado = false where id = ? ";
+
+        try {
+            Connection c = getConnection();
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setInt(1,id);
+
+            int rs = ps.executeUpdate();
+
+
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
     public void eliminarSiNombreContiene(String texto) {
 
+        if (texto == null){
+
+            throw new IllegalArgumentException("tiene que contener texto");
+        }
+
+        String sql = "DELETE FROM cursos where nombre like ?";
+        try{
+
+            Connection c = getConnection();
+            PreparedStatement ps = c.prepareStatement(sql);
+
+            ps.setString(1, "%" + texto + "%");
+
+            int rs = ps.executeUpdate();
+
+
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     @Override
     public List<Curso> listarPorEstado(Boolean estado) {
+
+        String sql = "SELECT  * from cursos order by ? ASC";
+
+        try{
+
+            Connection c = getConnection();
+            PreparedStatement ps = c.prepareStatement(sql);
+
+            ps.setBoolean(1,estado);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return List.of();
     }
 
