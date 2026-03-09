@@ -159,8 +159,8 @@ public class CursoRepositoryDB implements CursoRepository {
     @Override
     public List<Curso> listarPorEstado(Boolean estado) {
 
-        String sql = "SELECT  * from cursos order by ? ASC";
-
+        String sql = "SELECT  * from cursos where estado = ?";
+        List<Curso> cursos = new ArrayList<>();
         try{
 
             Connection c = getConnection();
@@ -168,14 +168,43 @@ public class CursoRepositoryDB implements CursoRepository {
 
             ps.setBoolean(1,estado);
 
+
+            ResultSet rs = ps.executeQuery(); //resultset
+
+            // creo la lista
+
+
+            while (rs.next()) { //mientras haya otra fila entra
+                Curso curso = new Curso(
+
+                        rs.getInt("id"),
+
+                        rs.getBoolean("estado"),
+                        rs.getString("nombre")
+
+                );
+                cursos.add(curso);
+
+
+
+            }
+
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return List.of();
+
+        return cursos;
     }
 
     @Override
     public List<Curso> listarOrdenadorPor(String nombre, String tipoOrden) {
+
+        String sql = "SELECT * from cursos order by nombre asc  ";
+
+
+
+
         return List.of();
     }
 
