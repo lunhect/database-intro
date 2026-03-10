@@ -200,12 +200,40 @@ public class CursoRepositoryDB implements CursoRepository {
     @Override
     public List<Curso> listarOrdenadorPor(String nombre, String tipoOrden) {
 
-        String sql = "SELECT * from cursos order by nombre asc  ";
+
+       //pendiente las validaciones de orden pero va.
+
+        String sql = "SELECT * from cursos order by "+ nombre + " " + tipoOrden;
+
+        List<Curso> cursosOrdenados = new ArrayList<>();
+
+try{
+    Connection c = getConnection();
+    PreparedStatement ps = c.prepareStatement(sql);
+    ResultSet rs = ps.executeQuery();
+
+    while (rs.next()){
+
+        Curso curso = new Curso(
+
+          rs.getInt("id"),
+          rs.getBoolean("estado"),
+          rs.getString("nombre")
+
+        );
+
+cursosOrdenados.add(curso);
 
 
 
+    }
 
-        return List.of();
+
+} catch (SQLException e) {
+    throw new RuntimeException(e);
+}
+
+        return cursosOrdenados;
     }
 
 
